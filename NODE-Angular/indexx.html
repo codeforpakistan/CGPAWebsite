@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html ng-app="angularjsNodejs">
+<head>
+    <title>AngularJS with NodeJS</title>
+   <!-- <script src="./angular.min.js"></script>-->
+    <!--<script src="./app.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+</head>
+<body>
+    <div ng-controller="myController">
+        <h2 ng-repeat="d in ddata">{{d}}</h2>
+        <h2>heeeeeeellooo</h2>
+
+        <button type="submit" class="btn btn-primary btn-lg" ng-click="displayAll()">Display </button>
+        <button type="submit" class="btn btn-primary btn-lg" ng-click="getspecific(1)">Specific id </button>
+
+    </div>
+</body>
+</html>
+
+<script>
+    var app = angular.module('angularjsNodejs', []);
+    app.controller('myController', function ($scope, $http) {
+        //$scope.data = [
+        //    "mpa1 ",
+        //    "mpa2 ",
+        //]
+
+        // when landing on the page, get all users and show them
+        $scope.displayAll = function () {
+            $http.get('/api/users')
+            .success(function (data) {
+                $scope.ddata = data;
+                console.log(data);
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+        }
+       
+
+
+        //get a specific user
+        // delete a todo after checking it
+        $scope.getspecific = function (id) {
+            $http.get('/api/users/' +id)
+            .success(function (data) {
+                $scope.ddata = data;
+                console.log(data);
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+
+        };
+    });
+</script>
