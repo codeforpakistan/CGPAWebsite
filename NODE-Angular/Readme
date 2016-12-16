@@ -1,1 +1,3 @@
 
+Start server by using command "npm start"
+or by using command "nodemon server.js"
