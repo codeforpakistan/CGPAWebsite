@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>CGPA - KPK Legislators' Performance Website</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="libs/font-awesome/4.5.0/css/font-awesome.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="libs/ionicons/2.0.1/css/ionicons.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/AdminLTE.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="dist/css/skins/_all-skins.css">
+
+  <link rel="stylesheet" href="libs/leaflet/css/leaflet.css" />
+  <link rel="stylesheet" href="libs/leaflet/css/leaflet-cgpa.css" />
+  <script src="libs/leaflet/js/leaflet.js"></script>
+</head>
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<body class="skin-cgpa layout-top-nav">
+<div class="wrapper">
+
+  <header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="index2.html" class="navbar-brand"><b>CGPA</b> Website</a>
+        </div>
+
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <!-- Messages: style can be found in dropdown.less-->
+            <li class="fa messages-menu">
+              <!-- Menu toggle button -->
+              <a href="#">
+                <i class="fa fa-home"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-custom-menu -->
+      </div>
+    </nav>
+  </header>
+  <!-- Full Width Column -->
+  <div class="content-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+
+          <div class="box box-widget widget-page">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-page-header bg-gray-light">
+              <h3 class="widget-page-title">KPK Legislators' Performance Website</h3>
+              <h5 class="widget-page-desc">Find out all about legistlators' performance</h5>
+            </div>
+          </div>
+        </div>
+        <!-- /.col -->
+      </div>
+
+      <div class="row">
+        <div class="col-md-5 col-sm-8 col-xs-12">
+          <div class="info-box bg-green">
+            <span class="info-box-icon"><i class="fa fa-map-marker"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-number" style="padding-top: 10px;">KPK Map</span>
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <span class="progress-description">
+                Click on a district to view the legislators listing
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+          <div class="info-box">
+            <div id='map'></div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-md-7 col-sm-8 col-xs-12">
+          <div class="info-box bg-aqua">
+            <span class="info-box-icon"><i class="fa fa-users"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-number" style="padding-top: 10px;">Legislators</span>
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <span class="progress-description">
+                Click on a legislator for details
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+          <div class="info-box">
+            <div class="box-header">
+              <h3 class="box-title" id="LegistlatorsList">No District Selected</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover" id="ltable">
+                <tbody>
+                <tr>
+                  <th>Contituency</th>
+                  <th>Name</th>
+                </tr>
+              </tbody></table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+        <!-- /.col -->
+      </div>
+    </div>
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="pull-right hidden-xs">
+        All rights reserved.
+      </div>
+      Copyright &copy; 2014-2016 CGPA.
+    </div>
+    <!-- /.container -->
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="libs/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="data/geojson/pk.kpk.geojson"></script>
+
+<script type="text/javascript">
+
+	var map = L.map('map').setView([34.05, 72.1], 7);
+
+        function UpdateDistrictName(props) {
+          dn = document.getElementById("DistrictName");
+
+          dn.innerHTML = (props ? props.NAME_3 : 'Hover or click on a district');
+        }
+
+	// get color depending on population density value
+	function getColor(d) {
+		return '#ccc';
+	}
+
+	function style(feature) {
+		return {
+			weight: 2,
+			opacity: 1,
+			color: '#666',
+			dashArray: '1',
+			fillOpacity: 0.7,
+			fillColor: getColor(feature.properties.density)
+		};
+	}
+
+	function highlightFeature(e) {
+		var layer = e.target;
+
+		layer.setStyle({
+			weight: 2,
+			color: '#fff',
+                        fillColor: '#006600',
+			dashArray: '',
+			fillOpacity: 0.7
+		});
+
+		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+			layer.bringToFront();
+		}
+
+		//info.update(layer.feature.properties);
+                UpdateDistrictName(layer.feature.properties);
+	}
+
+	var geojson;
+
+	function resetHighlight(e) {
+		geojson.resetStyle(e.target);
+		info.update();
+	}
+
+	function zoomToFeature(e) {
+		map.fitBounds(e.target.getBounds());
+	}
+
+	function showDistrictID(e) {
+		var layer = e.target;
+
+		if(layer.feature.properties.ContituencyData)
+                {
+                  document.getElementById("LegistlatorsList").innerHTML = "Legislators for the " + layer.feature.properties.NAME_3;
+
+                  data = layer.feature.properties.ContituencyData;
+                  ltable = document.getElementById("ltable");
+
+                  for(var I = 1; I < ltable.rows.length; )
+                  {
+                    ltable.deleteRow(1);
+                  }
+
+                  for(var I in data)
+                  {
+                    r = ltable.insertRow();
+                    c1 = r.insertCell(0);
+                    c2 = r.insertCell(1);
+
+                    c1.innerHTML = data[I].Contituency;
+                    c2.innerHTML = '<a href="mpa.html?name=' + encodeURIComponent(data[I].Name) + '&const=' + encodeURIComponent(data[I].Contituency) + '">' + data[I].Name + '</a>';
+                  }
+                }
+                else
+                {
+                  alert(layer.feature.properties.ID_3);
+                }
+	}
+
+	function onEachFeature(feature, layer) {
+		layer.on({
+			mouseover: highlightFeature,
+			mouseout: resetHighlight,
+			click: showDistrictID //zoomToFeature
+		});
+	}
+
+	geojson = L.geoJson(pk3, {
+		style: style,
+		onEachFeature: onEachFeature
+	}).addTo(map);
+
+        map.attributionControl.setPrefix("");
+        map.touchZoom.disable();
+        map.doubleClickZoom.disable();
+        map.scrollWheelZoom.disable();
+        map.boxZoom.disable();
+        map.keyboard.disable();
+        $(".leaflet-control-zoom").css("visibility", "hidden");
+
+</script>
+
+</body>
+</html>
