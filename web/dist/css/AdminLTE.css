@@ -3027,6 +3027,24 @@ table.text-center th {
   border: none;
   position: relative;
 }
+.widget-page .widget-page-header {
+  padding: 20px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.widget-page .widget-page-title {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 25px;
+  font-weight: 300;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+.widget-page .widget-page-desc {
+  margin-top: 0;
+}
+.widget-page .box-footer {
+  padding-top: 30px;
+}
 .widget-user .widget-user-header {
   padding: 20px;
   padding-left: 150px !important;
