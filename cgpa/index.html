@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>CGPA - KPK Legislators' Performance Website</title>
+  <title>CGPA - Khyber Pakhtunkhwa Legislators' Performance Scorecard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -30,7 +30,7 @@
     <nav class="navbar navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="index2.html" class="navbar-brand"><b>CGPA</b> Website</a>
+          <a href="index.html" class="navbar-brand"><b>CGPA</b> Website</a>
         </div>
 
         <!-- Navbar Right Menu -->
@@ -58,7 +58,7 @@
           <div class="box box-widget widget-page">
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="widget-page-header bg-gray-light">
-              <h3 class="widget-page-title">KPK Legislators' Performance Website</h3>
+              <h3 class="widget-page-title">Khyber Pakhtunkhwa Legislators' Performance Scorecard</h3>
               <h5 class="widget-page-desc">Find out all about legistlators' performance</h5>
             </div>
           </div>
@@ -72,7 +72,7 @@
             <span class="info-box-icon"><i class="fa fa-map-marker"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-number" style="padding-top: 10px;">KPK Map</span>
+              <span class="info-box-number" style="padding-top: 10px;">Khyber Pakhtunkhwa Map</span>
               <div class="progress">
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
@@ -147,7 +147,25 @@
 
 <script type="text/javascript">
 
-	var map = L.map('map').setView([34.05, 72.1], 7);
+	var map = L.map('map').setView([34.05, 74], 6);
+
+	// control that shows state info on hover
+	var info = L.control();
+
+	info.onAdd = function (map) {
+		this._div = L.DomUtil.create('div', 'info');
+		this.update();
+		return this._div;
+	};
+
+	info.update = function (props) {
+		this._div.innerHTML = '<h4>' +  (props ?
+			'<h4>' + props.NAME_3 + '</h4>'
+			: 'Hover over a district');
+	};
+
+	info.addTo(map);
+
 
         function UpdateDistrictName(props) {
           dn = document.getElementById("DistrictName");
@@ -187,7 +205,8 @@
 		}
 
 		//info.update(layer.feature.properties);
-                UpdateDistrictName(layer.feature.properties);
+                //UpdateDistrictName(layer.feature.properties);
+		info.update(layer.feature.properties);
 	}
 
 	var geojson;

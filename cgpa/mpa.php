@@ -1,3 +1,13 @@
+<?php
+
+require_once("classes/Start.php");
+require_once("classes/MPA.class.php");
+
+$MyClass = new MPA($MessageLog, false);
+$MyClass->GetRecordByID($MessageLog, $db);
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +37,7 @@
     <nav class="navbar navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="index2.html" class="navbar-brand"><b>CGPA</b> Website</a>
+          <a href="index.html" class="navbar-brand"><b>CGPA</b> Website</a>
         </div>
 
         <!-- Navbar Right Menu -->
@@ -68,36 +78,34 @@
           <div class="box box-widget widget-user">
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="widget-user-header bg-gray-light">
-              <h3 class="widget-user-username">Mr. Abdul Munim</h3>
-              <h5 class="widget-user-desc">A well-known senior politician in current Khyber Pakhtunkhwa Assembly</h5>
+              <h3 class="widget-user-username"><?php echo $MyClass->m_txtName ?></h3>
+              <h5 class="widget-user-desc"><?php echo $MyClass->m_txtDescription ?></h5>
             </div>
             <div class="widget-user-image">
-              <img src="img/defaults/profile_image_none.png" alt="User Avatar">
+              <img src="img/defaults/profile_image_none.png" alt="<?php echo $MyClass->m_txtName ?>">
             </div>
             <div class="box-footer">
               <div class="row">
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <img src="img/party/pti.png" alt="Pakistan Tehreek-i-Insaaf">
-                    <span class="description-text">Pakistan Tehreek-i-Insaaf</span>
+                    <img src="img/party/pti.png" alt="<?php echo $MyClass->m_txtPartyLongName ?>">
+                    <span class="description-text"><?php echo $MyClass->m_txtPartyLongName ?></span>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <span class="description-text">PK-88</span>
-                    <br />
-                    <span class="description-text">Name of District</span>
+                    <span class="description-text"><?php echo $MyClass->m_txtConstituencyID ?></span>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4">
                   <div class="description-block">
-                    <span class="description-text">Special Assistant Tourism Department</span>
+                    <span class="description-text">SOMETHING HERE</span>
                     <br />
-                    <span class="description-text">April 1, 2014</span>
+                    <span class="description-text">DATE HERE</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
@@ -118,8 +126,13 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Attendance Record</span>
-              <span class="info-box-number">57/92</span>
-
+              <span class="info-box-number">
+<?php
+                echo ($MyClass->m_txtTotalPresents + $MyClass->m_txtTotalApplications)
+                      . "/"
+                      . ($MyClass->m_txtTotalPresents + $MyClass->m_txtTotalApplications + $MyClass->m_txtTotalAbsents)
+?>
+              </span>
               <div class="progress">
                 <div class="progress-bar" style="width: 62%"></div>
               </div>
@@ -330,27 +343,35 @@
     var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
     pieChartCanvas.canvas.height = GRAPH_HEIGHT;
 
+<?php echo ($MyClass->m_txtTotalPresents + $MyClass->m_txtTotalApplications)
+                      . "/"
+                      . ($MyClass->m_txtTotalPresents + $MyClass->m_txtTotalApplications + $MyClass->m_txtTotalAbsents)
+?>
+
     var pieChart = new Chart(pieChartCanvas);
     var PieData = [
       {
-        value: 30,
+        value: <?php echo ($MyClass->m_txtTotalAbsents) ?>,
         color: "#e34040",
         highlight: "#e34040",
         label: "Absent"
       },
       {
-        value: 62,
+        value: <?php echo ($MyClass->m_txtTotalPresents) ?>,
         color: "#0099c1",
         highlight: "#0099c1",
         label: "Present",
       },
       {
-        value: 2,
+        value: <?php echo ($MyClass->m_txtTotalApplications) ?>,
         color: "#d2d6de",
         highlight: "#d2d6de",
-        label: "Others"
+        label: "Applications"
       }
     ];
+
+  
+
     var pieOptions = {
       //Boolean - Whether we should show a stroke on each segment
       segmentShowStroke: true,
@@ -378,12 +399,6 @@
       onAnimationComplete: function()
       {
           this.showTooltip(this.segments, true);
-  
-          //Show tooltips in bar chart (issue: multiple datasets doesnt work http://jsfiddle.net/5gyfykka/14/)
-          //this.showTooltip(this.datasets[0].bars, true);
-  
-          //Show tooltips in line chart (issue: multiple datasets doesnt work http://jsfiddle.net/5gyfykka/14/)
-          //this.showTooltip(this.datasets[0].points, true);  
       },
   
       tooltipEvents: [],
