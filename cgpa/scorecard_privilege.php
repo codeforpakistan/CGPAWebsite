@@ -1,3 +1,13 @@
+<?php
+
+require_once("classes/Start.php");
+require_once("classes/MPA.class.php");
+
+$MyClass    = new MPA($MessageLog, false);
+$ResultSet  = $MyClass->GetRecordList($db);
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,30 +61,16 @@
   <div class="content-wrapper">
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
-
-          <div class="box box-widget widget-page">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-page-header bg-gray-light">
-              <h3 class="widget-page-title">Khyber Pakhtunkhwa Legislators' Performance Scorecard</h3>
-              <h5 class="widget-page-desc">Find out all about legistlators' performance</h5>
-            </div>
-          </div>
-        </div>
-        <!-- /.col -->
-      </div>
-      <div class="row">
         <div class="col-xs-12">
           <div class="info-box bg-green">
-            <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
-
+            <span class="info-box-icon"><i class="fa fa-bolt"></i></span>
             <div class="info-box-content">
-              <span class="info-box-number" style="padding-top: 10px;">The Scorecard</span>
+              <h3>Priviledge Motion Scorecard</h3>
               <div class="progress">
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
               <span class="progress-description">
-                The record of all the legislators. Feel free to sort and filter data however you may choose.
+                This page shows the number of privilege motions by each legislators. Feel free to sort and filter data however you may choose.
               </span>
             </div>
             <!-- /.info-box-content -->
@@ -84,66 +80,38 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <!-- /.box-header -->
+            <div class="box-header">
+              <h3 class="box-title">Priviledge Motion Scores</h3>
+            </div>
             <div class="box-body">
-              <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+              <div id="scoreTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                   <div class="col-sm-12">
-                    <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                    <table id="scoreTable" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="scoreTable_info">
                       <thead>
                         <tr role="row">
-                          <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 196px;">
-                            Rendering engine
+                          <th class="sorting_asc" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 196px;">
+                            MPA Name
                           </th>
-                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 243px;">
-                            Browser
+                          <th class="sorting" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 243px;">
+                            Political Party
                           </th>
-                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 214px;">
-                            Platform(s)
+                          <th class="sorting" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 214px;">
+                            Constituency
                           </th>
-                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 168px;">
-                            Engine version
+                          <th class="sorting" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 168px;">
+                            Privilege Motions
                           </th>
-                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 123px;">
-                            CSS grade
+                          <th class="sorting" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 168px;">
+                            Rank
                           </th>
                         </tr>
                     </thead>
                     <tbody>
-                      <tr role="row" class="odd">
-                        <td class="sorting_1">Gecko</td>
-                        <td>Firefox 1.0</td>
-                        <td>Win 98+ / OSX.2+</td>
-                        <td>1.7</td>
-                        <td>A</td>
-                      </tr>
-                      <tr role="row" class="odd">
-                        <td class="sorting_1">ecko</td>
-                        <td>irefox 1.0</td>
-                        <td>Win 98+ / OSX.2+</td>
-                        <td>1.7</td>
-                        <td>A</td>
-                      </tr>
+<?php
+                      Utils::HTMLForTable($MessageLog, $ResultSet, array("mpaName", "plpPoliticalPartyID", "cntConstituencyID", "PrivilegeMotions", "PRank"), array("even", "odd"));
+?>
                     </tbody>
-                    <tfoot>
-                      <tr>
-                        <th rowspan="1" colspan="1">
-                          Rendering engine
-                        </th>
-                        <th rowspan="1" colspan="1">
-                          Browser
-                        </th>
-                        <th rowspan="1" colspan="1">
-                          Platform(s)
-                        </th>
-                        <th rowspan="1" colspan="1">
-                          Engine version
-                        </th>
-                        <th rowspan="1" colspan="1">
-                          CSS grade
-                        </th>
-                      </tr>
-                    </tfoot>
                   </table>
                 </div>
               </div>
@@ -179,13 +147,15 @@
 <!-- page script -->
 <script>
   $(function () {
-    $('#example1').DataTable({
+    $('#scoreTable').DataTable({
       "paging": true,
-      "lengthChange": false,
+      "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,
-      "autoWidth": false
+      "autoWidth": false,
+      "order": [[ 4, "asc" ]],
+      "lengthMenu": [ 10, 25, 50, 75, 100, 150, 250, 500 ]
     });
   });
 </script>

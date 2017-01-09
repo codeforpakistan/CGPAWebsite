@@ -42,7 +42,57 @@ class Utils
 			$MessageLog->AddMessage(__FILE__, __LINE__, "Unable to reset the ResultSet pointer to start row.");
 		}
 	}
-	
+
+/*
+
+                      <tr role="row" class="odd">
+                        <td>Gecko</td>
+                        <td>Firefox 1.0</td>
+                        <td>Win 98+ / OSX.2+</td>
+                        <td>1.7</td>
+                        <td>A</td>
+                        <td>A</td>
+                        <td>1.7</td>
+                      </tr>
+                      <tr role="row" class="even">
+                        <td>ecko</td>
+                        <td>irefox 1.0</td>
+                        <td>Win 98+ / OSX.2+</td>
+                        <td>1.7</td>
+                        <td>A</td>
+                        <td>A</td>
+                        <td>1.4</td>
+                      </tr>
+
+
+*/
+	public static function HTMLForTable($MessageLog, $ResultSet, $ValueColumnNames, $EvenOddCSSStyles)
+	{
+		$DataRow = mysqli_fetch_array($ResultSet);
+
+		if( !$DataRow )
+		{
+			$MessageLog->AddMessage(__FILE__, __LINE__, "No rows found.");
+		}
+
+		$i = 0;
+
+		while($DataRow)
+		{
+			echo "<tr role='row' class='" . $EvenOddCSSStyles[$i % 2] . "'>";
+
+			for($j = 0; $j < sizeof($ValueColumnNames); $j++)
+			{
+				echo "<td>" . $DataRow[$ValueColumnNames[$j]] . "</td>";
+			}
+
+			echo "</tr>";
+			$DataRow = mysqli_fetch_array($ResultSet);
+
+			$i++;
+		}
+	}
+
 	public static function HTMLForDropdownYN($MessageLog, $SelectedValue)
 	{
 		$MessageLog->AddMessage(__FILE__, __LINE__, "YN Selected Value: " . $SelectedValue);

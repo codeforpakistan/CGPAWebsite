@@ -3,8 +3,13 @@
 require_once("classes/Start.php");
 require_once("classes/MPA.class.php");
 
-$MyClass = new MPA($MessageLog, false);
-$MyClass->GetRecordByID($MessageLog, $db);
+$AttendancePercent  = 0;
+$MyClass            = new MPA($MessageLog, false);
+
+if( $MyClass->GetRecordByName($MessageLog, $db) )
+{
+  $AttendancePercent = round(100 * (($MyClass->m_txtTotalPresents + $MyClass->m_txtTotalApplications) / ($MyClass->m_txtTotalPresents + $MyClass->m_txtTotalApplications + $MyClass->m_txtTotalAbsents)));
+}
 
 ?>
 
@@ -82,13 +87,13 @@ $MyClass->GetRecordByID($MessageLog, $db);
               <h5 class="widget-user-desc"><?php echo $MyClass->m_txtDescription ?></h5>
             </div>
             <div class="widget-user-image">
-              <img src="img/defaults/profile_image_none.png" alt="<?php echo $MyClass->m_txtName ?>">
+              <img src="img/legislator/<?php echo $MyClass->m_txtImageName ?>" alt="<?php echo $MyClass->m_txtName ?>">
             </div>
             <div class="box-footer">
               <div class="row">
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <img src="img/party/pti.png" alt="<?php echo $MyClass->m_txtPartyLongName ?>">
+                    <img src="img/party/<?php echo $MyClass->m_txtPartyImageName ?>" alt="<?php echo $MyClass->m_txtPartyLongName ?>">
                     <span class="description-text"><?php echo $MyClass->m_txtPartyLongName ?></span>
                   </div>
                   <!-- /.description-block -->
@@ -134,10 +139,10 @@ $MyClass->GetRecordByID($MessageLog, $db);
 ?>
               </span>
               <div class="progress">
-                <div class="progress-bar" style="width: 62%"></div>
+                <div class="progress-bar" style="width: <?php echo $AttendancePercent; ?>%"></div>
               </div>
                   <span class="progress-description">
-                    62% Percent
+                    <?php echo $AttendancePercent; ?>% Percent
                   </span>
             </div>
             <!-- /.info-box-content -->
@@ -146,38 +151,13 @@ $MyClass->GetRecordByID($MessageLog, $db);
           <div class="info-box">
               <canvas id="pieChart">
               </canvas>
-            <!-- /.box-body -->
-          </div>
-          <div class="info-box">
-            <div class="box-header">
-              <h3 class="box-title">Committee Memberships</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tbody><tr>
-                  <th>Member Since</th>
-                  <th>Committee</th>
-                </tr>
-                <tr>
-                  <td>11&nbsp;Jul&nbsp;2014</td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>11&nbsp;Jul&nbsp;2014</td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>11&nbsp;Jul&nbsp;2014</td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>11&nbsp;Jul&nbsp;2014</td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-              </tbody></table>
-            </div>
-            <!-- /.box-body -->
+              <div style="padding-bottom: 10px; padding-top: 15px;">
+                <ul style="list-style: none;">
+                  <li><span style="background-color: #0099c1; padding-left: 35px; margin-right: 20px;"></span> Presents</li>
+                  <li><span style="background-color: #e34040; padding-left: 35px; margin-right: 20px;"></span> Absents</li>
+                  <li><span style="background-color: #d2d6de; padding-left: 35px; margin-right: 20px;"></span> Applications</li>
+                </ul>
+              </div>
           </div>
         </div>
         <!-- /.col -->
@@ -187,62 +167,49 @@ $MyClass->GetRecordByID($MessageLog, $db);
 
             <div class="info-box-content">
               <span class="info-box-text">Resolution Participation</span>
-              <span class="info-box-number">17/232</span>
+              <span class="info-box-number"><?php echo $MyClass->m_txtResolutions ?></span>
 
               <div class="progress">
-                <div class="progress-bar" style="width: 7%"></div>
+                <div class="progress-bar" style="width: 100%"></div>
               </div>
                   <span class="progress-description">
-                    7% Percent
+                    Rank #<?php echo $MyClass->m_txtResolutionsRank ?>
                   </span>
             </div>
             <!-- /.info-box-content -->
           </div>
-          <!-- /.info-box -->
-          <!-- /.info-box -->
-          <div class="info-box">
-            <canvas id="barChart">
-            <canvas>
-            <!-- /.box-body -->
-          </div>
+          <div class="info-box bg-aqua">
+            <span class="info-box-icon"><i class="fa fa-institution"></i></span>
 
-          <div class="info-box">
-            <div class="box-header">
-              <h3 class="box-title">Key Resolutions</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tbody><tr>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Resolution</th>
-                </tr>
-                <tr>
-                  <td>11&nbsp;Jul&nbsp;2014</td>
-                  <td><span class="label label-success">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>11&nbsp;Jul&nbsp;2014</td>
-                  <td><span class="label label-warning">Pending</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>11&nbsp;Jul&nbsp;2014</td>
-                  <td><span class="label label-primary">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>11&nbsp;Jul&nbsp;2014</td>
-                  <td><span class="label label-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-              </tbody></table>
-            </div>
-            <!-- /.box-body -->
-          </div>
+            <div class="info-box-content">
+              <span class="info-box-text">Bills Participation</span>
+              <span class="info-box-number"><?php echo $MyClass->m_txtBills ?></span>
 
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+                  <span class="progress-description">
+                    Rank #<?php echo $MyClass->m_txtBillsRank ?>
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <div class="info-box bg-red-active">
+            <span class="info-box-icon"><i class="fa fa-bell-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Call Attention Notice Participation</span>
+              <span class="info-box-number"><?php echo $MyClass->m_txtCallAttentionNotices ?></span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+                  <span class="progress-description">
+                    Rank #<?php echo $MyClass->m_txtCallAttentionNoticesRank ?>
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+         </div>
         </div>
         <!-- /.col -->
         <div class="col-md-4 col-sm-8 col-xs-12">
@@ -251,55 +218,49 @@ $MyClass->GetRecordByID($MessageLog, $db);
 
             <div class="info-box-content">
               <span class="info-box-text">Question Participation</span>
-              <span class="info-box-number">19/83</span>
+              <span class="info-box-number"><?php echo $MyClass->m_txtQuestions ?></span>
 
               <div class="progress">
-                <div class="progress-bar" style="width: 23%"></div>
+                <div class="progress-bar" style="width: 100%"></div>
               </div>
                   <span class="progress-description">
-                    23% Percent
+                    Rank #<?php echo $MyClass->m_txtQuestionsRank ?>
                   </span>
             </div>
             <!-- /.info-box-content -->
           </div>
-          <!-- /.info-box -->
-          <!-- /.info-box -->
-          <div class="info-box">
-            <canvas id="barChart2">
-            <canvas>
-            <!-- /.box-body -->
-          </div>
-          <div class="info-box">
-            <div class="box-header">
-              <h3 class="box-title">Key Questions</h3>
+          <div class="info-box bg-green">
+            <span class="info-box-icon"><i class="fa fa-bolt"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Privilege Motion Participation</span>
+              <span class="info-box-number"><?php echo $MyClass->m_txtPrivilegeMotions ?></span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+                  <span class="progress-description">
+                    Rank #<?php echo $MyClass->m_txtPrivilegeMotionsRank ?>
+                  </span>
             </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tbody><tr>
-                  <th>Date</th>
-                  <th>Question</th>
-                </tr>
-                <tr>
-                  <td>11&nbsp;Jul&nbsp;2014</td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>11&nbsp;Jul&nbsp;2014</td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>11&nbsp;Jul&nbsp;2014</td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>11&nbsp;Jul&nbsp;2014</td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-              </tbody></table>
+            <!-- /.info-box-content -->
+         </div>
+          <div class="info-box bg-aqua">
+            <span class="info-box-icon"><i class="fa fa-legal"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Adjournment Motion Participation</span>
+              <span class="info-box-number"><?php echo $MyClass->m_txtAdjournmentMotions ?></span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+                  <span class="progress-description">
+                    Rank #<?php echo $MyClass->m_txtAdjournmentMotionsRank ?>
+                  </span>
             </div>
-            <!-- /.box-body -->
-          </div>
+            <!-- /.info-box-content -->
+         </div>
         </div>
         <!-- /.col -->
       </div>
@@ -370,8 +331,6 @@ $MyClass->GetRecordByID($MessageLog, $db);
       }
     ];
 
-  
-
     var pieOptions = {
       //Boolean - Whether we should show a stroke on each segment
       segmentShowStroke: true,
@@ -393,6 +352,8 @@ $MyClass->GetRecordByID($MessageLog, $db);
       responsive: true,
       // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
       maintainAspectRatio: true,
+      // Tooltip Template
+      tooltipTemplate: "<%= value %>",
       //String - A legend template
       legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
 
@@ -403,98 +364,12 @@ $MyClass->GetRecordByID($MessageLog, $db);
   
       tooltipEvents: [],
   
-      showTooltips: true,
+      //showTooltips: true,
       tooltipFillColor: "rgba(0,0,0,0.6)",
     };
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
     pieChart.Doughnut(PieData, pieOptions);
-
-
-    var areaChartData = {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
-      datasets: [
-        {
-          label: "Resolutions",
-          fillColor: "rgba(210, 214, 222, 1)",
-          strokeColor: "rgba(210, 214, 222, 1)",
-          pointColor: "rgba(210, 214, 222, 1)",
-          pointStrokeColor: "#c1c7d1",
-          pointHighlightFill: "#fff",
-          pointHighlightStroke: "rgba(220,220,220,1)",
-          data: [65, 59, 80, 81, 56, 55, 40]
-        },
-        {
-          label: "Participation",
-          fillColor: "rgba(60,141,188,0.9)",
-          strokeColor: "rgba(60,141,188,0.8)",
-          pointColor: "#3b8bba",
-          pointStrokeColor: "rgba(60,141,188,1)",
-          pointHighlightFill: "#fff",
-          pointHighlightStroke: "rgba(60,141,188,1)",
-          data: [28, 48, 40, 19, 23, 27, 30]
-        }
-      ]
-    };
-
-
-    //-------------
-    //- BAR CHART -
-    //-------------
-    var barChartCanvas = $("#barChart").get(0).getContext("2d");
-    barChartCanvas.canvas.height = GRAPH_HEIGHT;
-
-    var barChart = new Chart(barChartCanvas);
-    var barChartData = areaChartData;
-    barChartData.datasets[1].fillColor = "#00a65a";
-    barChartData.datasets[1].strokeColor = "#00a65a";
-    barChartData.datasets[1].pointColor = "#00a65a";
-    var barChartOptions = {
-      //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-      scaleBeginAtZero: true,
-      //Boolean - Whether grid lines are shown across the chart
-      scaleShowGridLines: true,
-      //String - Colour of the grid lines
-      scaleGridLineColor: "rgba(0,0,0,.05)",
-      //Number - Width of the grid lines
-      scaleGridLineWidth: 1,
-      //Boolean - Whether to show horizontal lines (except X axis)
-      scaleShowHorizontalLines: true,
-      //Boolean - Whether to show vertical lines (except Y axis)
-      scaleShowVerticalLines: true,
-      //Boolean - If there is a stroke on each bar
-      barShowStroke: true,
-      //Number - Pixel width of the bar stroke
-      barStrokeWidth: 2,
-      //Number - Spacing between each of the X value sets
-      barValueSpacing: 5,
-      //Number - Spacing between data sets within X values
-      barDatasetSpacing: 1,
-      //String - A legend template
-      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-      //Boolean - whether to make the chart responsive
-      responsive: true,
-      maintainAspectRatio: true
-    };
-
-    barChartOptions.datasetFill = false;
-    barChart.Bar(barChartData, barChartOptions);
-
-
-    //-------------
-    //- BAR2 CHART -
-    //-------------
-    var barChartCanvas2 = $("#barChart2").get(0).getContext("2d");
-    barChartCanvas2.canvas.height = GRAPH_HEIGHT;
-
-    var barChart2 = new Chart(barChartCanvas2);
-    var barChartData2 = areaChartData;
-    barChartData.datasets[1].fillColor = "#f39c12";
-    barChartData.datasets[1].strokeColor = "#f39c12";
-    barChartData.datasets[1].pointColor = "#f39c12";
-
-    barChartOptions.datasetFill = false;
-    barChart2.Bar(barChartData2, barChartOptions);
   });
 </script>
 </body>

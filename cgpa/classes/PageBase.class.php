@@ -11,9 +11,6 @@ require_once("Base.class.php");
 
 abstract class PageBase extends Base
 {
-	abstract protected function GetRecordByID($MessageLog, $db);	
-	abstract public function GetRecordList($db, $iCurrentPage, &$iTotalPageCount);
-
 	public function __construct($MessageLog)
 	{
 		parent::__construct($MessageLog);

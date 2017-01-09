@@ -59,7 +59,16 @@
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="widget-page-header bg-gray-light">
               <h3 class="widget-page-title">Khyber Pakhtunkhwa Legislators' Performance Scorecard</h3>
-              <h5 class="widget-page-desc">Find out all about legistlators' performance</h5>
+              <h5 class="widget-page-desc">
+                <a href="scorecard_overall.php">Overall Scores</a>
+                | <a href="scorecard_attendance.php">Attendance Scores</a>
+                | <a href="scorecard_resolutions.php">Resolution Scores</a>
+                | <a href="scorecard_bills.php">Bills Scores</a>
+                | <a href="scorecard_questions.php">Questions Scores</a>
+                | <a href="scorecard_privilege.php">Privilege Motion Scores</a>
+                | <a href="scorecard_adjournment.php">Adjournment Motion Scores</a>
+                | <a href="scorecard_calls.php">Call Attention Notice Scores</a>
+              </h5>
             </div>
           </div>
         </div>
@@ -242,7 +251,7 @@
                     c2 = r.insertCell(1);
 
                     c1.innerHTML = data[I].Contituency;
-                    c2.innerHTML = '<a href="mpa.html?name=' + encodeURIComponent(data[I].Name) + '&const=' + encodeURIComponent(data[I].Contituency) + '">' + data[I].Name + '</a>';
+                    c2.innerHTML = '<a href="mpa.php?mpaName=' + encodeURIComponent(data[I].Name) + '">' + data[I].Name + '</a>';
                   }
                 }
                 else
