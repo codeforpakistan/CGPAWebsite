@@ -16,7 +16,7 @@ require_once("footer.php");
       "lengthChange": false,
       "searching": false,
       "ordering": true,
-      "info": true,
+      "info": false,
       "autoWidth": false,
       "order": [[ <?php echo $OrderColumn; ?>, "desc" ]],
       "lengthMenu": [ 10, 25, 50, 75, 100, 150, 250, 500 ]
