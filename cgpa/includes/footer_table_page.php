@@ -12,13 +12,13 @@ require_once("footer.php");
 <script>
   $(function () {
     $('#scoreTable').DataTable({
-      "paging": true,
-      "lengthChange": true,
-      "searching": true,
+      "paging": false,
+      "lengthChange": false,
+      "searching": false,
       "ordering": true,
       "info": true,
       "autoWidth": false,
-      "order": [[ 11, "desc" ]],
+      "order": [[ <?php echo $OrderColumn; ?>, "desc" ]],
       "lengthMenu": [ 10, 25, 50, 75, 100, 150, 250, 500 ]
     });
   });

@@ -7,6 +7,8 @@ $MyClass    = new MPA($MessageLog, false);
 $ResultSet  = $MyClass->GetRecordList($db);
 
 $PageTitle = "Questions Scorecard";
+$OrderColumn = 4;
+
 require_once("includes/header.php");
 
 ?>

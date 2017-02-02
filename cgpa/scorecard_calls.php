@@ -8,6 +8,8 @@ $ResultSet  = $MyClass->GetRecordList($db);
 
 
 $PageTitle = "Call for Attention Scorecard";
+$OrderColumn = 4;
+
 require_once("includes/header.php");
 
 ?>

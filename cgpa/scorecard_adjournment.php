@@ -8,6 +8,8 @@ $ResultSet  = $MyClass->GetRecordList($db);
 
 
 $PageTitle = "Adjournment Motion Scorecard";
+$OrderColumn = 4;
+
 require_once("includes/header.php");
 
 ?>
