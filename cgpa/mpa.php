@@ -11,56 +11,10 @@ if( $MyClass->GetRecordByName($MessageLog, $db) )
   $AttendancePercent = round(100 * (($MyClass->m_txtTotalPresents + $MyClass->m_txtTotalApplications) / ($MyClass->m_txtTotalPresents + $MyClass->m_txtTotalApplications + $MyClass->m_txtTotalAbsents)));
 }
 
+require_once("includes/header.php");
+
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>CGPA - Legislator's Performance Check</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="libs/font-awesome/4.5.0/css/font-awesome.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="libs/ionicons/2.0.1/css/ionicons.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/AdminLTE.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="dist/css/skins/_all-skins.css">
-  <![endif]-->
-</head>
-<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="skin-cgpa layout-top-nav">
-<div class="wrapper">
-
-  <header class="main-header">
-    <nav class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="index.html" class="navbar-brand"><b>CGPA</b> Website</a>
-        </div>
-
-        <!-- Navbar Right Menu -->
-        <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">
-            <!-- Messages: style can be found in dropdown.less-->
-            <li class="fa messages-menu">
-              <!-- Menu toggle button -->
-              <a href="#">
-                <i class="fa fa-home"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <!-- /.navbar-custom-menu -->
-      </div>
-    </nav>
-  </header>
   <!-- Full Width Column -->
   <div class="content-wrapper">
     <div class="container">
@@ -83,8 +37,8 @@ if( $MyClass->GetRecordByName($MessageLog, $db) )
           <div class="box box-widget widget-user">
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="widget-user-header bg-gray-light">
+              <p>&nbsp;</p>
               <h3 class="widget-user-username"><?php echo $MyClass->m_txtName ?></h3>
-              <h5 class="widget-user-desc"><?php echo $MyClass->m_txtDescription ?></h5>
             </div>
             <div class="widget-user-image">
               <img src="img/legislator/<?php echo $MyClass->m_txtImageName ?>" alt="<?php echo $MyClass->m_txtName ?>">
@@ -108,9 +62,11 @@ if( $MyClass->GetRecordByName($MessageLog, $db) )
                 <!-- /.col -->
                 <div class="col-sm-4">
                   <div class="description-block">
+<!--
                     <span class="description-text">SOMETHING HERE</span>
                     <br />
                     <span class="description-text">DATE HERE</span>
+-->
                   </div>
                   <!-- /.description-block -->
                 </div>
@@ -267,22 +223,12 @@ if( $MyClass->GetRecordByName($MessageLog, $db) )
     </div>
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="container">
-      <div class="pull-right hidden-xs">
-        All rights reserved.
-      </div>
-      Copyright &copy; 2014-2016 CGPA.
-    </div>
-    <!-- /.container -->
-  </footer>
-</div>
-<!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="libs/jQuery/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
+<?php
+
+require_once("includes/footer.php");
+
+?>
 
 <script src="libs/chartjs/Chart.min.js"></script>
 <!-- page script -->

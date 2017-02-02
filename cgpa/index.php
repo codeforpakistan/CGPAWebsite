@@ -1,60 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>CGPA - Khyber Pakhtunkhwa Legislators' Performance Scorecard</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="libs/font-awesome/4.5.0/css/font-awesome.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="libs/ionicons/2.0.1/css/ionicons.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/AdminLTE.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="dist/css/skins/_all-skins.css">
+<?php
 
-  <link rel="stylesheet" href="libs/leaflet/css/leaflet.css" />
-  <link rel="stylesheet" href="libs/leaflet/css/leaflet-cgpa.css" />
-  <script src="libs/leaflet/js/leaflet.js"></script>
-</head>
-<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="skin-cgpa layout-top-nav">
-<div class="wrapper">
+$PageTitle = "Home";
 
-  <header class="main-header">
-    <nav class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="index.html" class="navbar-brand"><b>CGPA</b> Website</a>
-        </div>
+require_once("includes/header.php");
 
-        <!-- Navbar Right Menu -->
-        <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">
-            <!-- Messages: style can be found in dropdown.less-->
-            <li class="fa messages-menu">
-              <!-- Menu toggle button -->
-              <a href="#">
-                <i class="fa fa-home"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <!-- /.navbar-custom-menu -->
-      </div>
-    </nav>
-  </header>
+?>
   <!-- Full Width Column -->
   <div class="content-wrapper">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-
+          <div class="modal-open">
+            <img src="img/kpk_banner.jpg">
+          </div>
           <div class="box box-widget widget-page">
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="widget-page-header bg-gray-light">
@@ -73,6 +31,47 @@
           </div>
         </div>
         <!-- /.col -->
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box box-solid callout">
+            <div class="box-header with-border alert-success">
+              <h3 class="box-title">About Legis.pk</h3>
+            </div>
+            <div class="box-body">
+              <p>
+                Political system in Pakistan is characterized by low transparency and weak accountability, especially in terms of
+                having effective and functional accountability mechanisms that are rooted in civil society and democratic processes.
+                People in electoral constituencies are generally unaware of their legal rights, and lack organizational and technical
+                resources to make their representatives and governments (i.e. local, provincial and national) accountable. Furthermore,
+                they are not aware of the role and responsibilities of the legislators, therefore the citizens often vote based on
+                issues which don't really fall in the legislators ambit, like construction of bridges, roads, and water channels. On
+                the other hand with individuals lacking the capacity to making elected representatives accountable, these representatives
+                then tend to stray from their core responsibilities.
+              </p>
+              <p>
+                Furthermore, in Pakistan, MPAs consider their work in constituencies to be more important than their purely parliamentary
+                functions. In Pakistan, the parliaments have set aside portions of the state budget for financing public socio-economic
+                development projects that are managed or overseen by MPAs/MNAs.
+              </p>
+              <p>
+                It should further be noted that in 2015, the KP Assembly even tried to pass a law which would have made the Assembly
+                exempt from the ambit of Right to Information legislation. This would have meant that nobody would have the backing
+                of the law in terms of monitoring the performance of elected representatives. However, this move was averted with the
+                advocacy campaigning of the civil society. As of right now, all elected members of the KP Provincial should provide
+                information under the KP RTI Act 2013. This law is a very useful tool in terms of quantifying the performance of
+                legislators. In fact, around the world Parliamentary Monitoring Organizations with the help of legislation on accessing
+                information, gather data on legislators and empower the public to make elected representatives more accountable.
+              </p>
+              <p>
+                In this regard, the purpose of this website has been to make elected representatives more accountable by monitoring
+                their legislative performance in the form of a legislative performance scorecard.  KP Right to Information Act 2013 was
+                used to get all the required information in order to analyse performance of legislators.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="row">
@@ -135,23 +134,14 @@
       </div>
     </div>
   </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="container">
-      <div class="pull-right hidden-xs">
-        All rights reserved.
-      </div>
-      Copyright &copy; 2014-2016 CGPA.
-    </div>
-    <!-- /.container -->
-  </footer>
-</div>
-<!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="libs/jQuery/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
+<?php
+
+require_once("includes/footer.php");
+
+?>
+
+
 <script type="text/javascript" src="data/geojson/pk.kpk.geojson"></script>
 
 <script type="text/javascript">

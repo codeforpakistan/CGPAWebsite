@@ -6,73 +6,25 @@ require_once("classes/MPA.class.php");
 $MyClass    = new MPA($MessageLog, false);
 $ResultSet  = $MyClass->GetRecordList($db);
 
+$PageTitle = "Attendance Scorecard";
+require_once("includes/header.php");
+
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>CGPA - Khyber Pakhtunkhwa Legislators' Performance Scorecard</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="libs/font-awesome/4.5.0/css/font-awesome.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="libs/ionicons/2.0.1/css/ionicons.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/AdminLTE.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="dist/css/skins/_all-skins.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="libs/datatables/css/dataTables.bootstrap.css">
-</head>
-<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="skin-cgpa layout-top-nav">
-<div class="wrapper">
-
-  <header class="main-header">
-    <nav class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="index.html" class="navbar-brand"><b>CGPA</b> Website</a>
-        </div>
-
-        <!-- Navbar Right Menu -->
-        <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">
-            <!-- Messages: style can be found in dropdown.less-->
-            <li class="fa messages-menu">
-              <!-- Menu toggle button -->
-              <a href="#">
-                <i class="fa fa-home"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <!-- /.navbar-custom-menu -->
-      </div>
-    </nav>
-  </header>
   <!-- Full Width Column -->
   <div class="content-wrapper">
-    <div class="container">
+    <div class="container bg-gray-light">
+      <div class="row bg-gray-light">
+        <div class="col-md-12">
+            &nbsp;
+        </div>
+      </div>
       <div class="row">
         <div class="col-xs-12">
-          <div class="info-box bg-aqua">
+          <div class="info-box bg-aqua-active disabled">
             <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
-
             <div class="info-box-content">
-              <h3>Attendance Scorecard</h3>
-              <div class="progress">
-                <div class="progress-bar" style="width: 100%"></div>
-              </div>
-              <span class="progress-description">
-                This page shows the attendance records of all the legislators. Feel free to sort and filter data however you may choose.
-              </span>
+              <h3><?php echo $PageTitle; ?></h3>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -80,10 +32,28 @@ $ResultSet  = $MyClass->GetRecordList($db);
       </div>
       <div class="row">
         <div class="col-xs-12">
+          <p>
+            Attendance scores have been calculated on the basis of analysing each individual
+            MPA's attendance in KP assembly sessions versus he total number of assembly sessions.
+          </p>
+          <br />
+          <h5 class="text-uppercase">Note:</h5>
+          <p>
+            The data relates to the period 29th May, 2013 to 30th June, 2016.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+            &nbsp;
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
           <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Attendance Details</h3>
-            </div>
+            <div class="box-header bg-gray disabled">
+              <h3 class="box-title">Attendance Scorecard</h3>
+            </div>  <!-- Full Width Column -->
             <div class="box-body">
               <div id="scoreTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
@@ -131,41 +101,9 @@ $ResultSet  = $MyClass->GetRecordList($db);
       </div>
     </div>
   </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="container">
-      <div class="pull-right hidden-xs">
-        All rights reserved.
-      </div>
-      Copyright &copy; 2014-2016 CGPA.
-    </div>
-    <!-- /.container -->
-  </footer>
-</div>
-<!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="libs/jQuery/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- DataTables -->
-<script src="libs/datatables/js/jquery.dataTables.min.js"></script>
-<script src="libs/datatables/js/dataTables.bootstrap.min.js"></script>
-<!-- page script -->
-<script>
-  $(function () {
-    $('#scoreTable').DataTable({
-      "paging": true,
-      "lengthChange": true,
-      "searching": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "order": [[ 6, "asc" ]],
-      "lengthMenu": [ 10, 25, 50, 75, 100, 150, 250, 500 ]
-    });
-  });
-</script>
+<?php
 
-</body>
-</html>
+require_once("includes/footer_table_page.php");
+
+?>

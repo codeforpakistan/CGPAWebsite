@@ -3,7 +3,7 @@
  * ----------
  */
 .skin-cgpa .main-header .navbar {
-  background-color: #737984;
+  background: url('../../../img/background.png') repeat fixed;
 }
 .skin-cgpa .main-header .navbar .nav > li > a {
   color: #ffffff;
