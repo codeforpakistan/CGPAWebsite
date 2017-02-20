@@ -76,6 +76,7 @@ class Utils
 		}
 
 		$i = 0;
+		$IsPercentColumn = "";
 
 		while($DataRow)
 		{
@@ -83,7 +84,14 @@ class Utils
 
 			for($j = 0; $j < sizeof($ValueColumnNames); $j++)
 			{
-				echo "<td>" . $DataRow[$ValueColumnNames[$j]] . "</td>";
+				$IsPercentColumn = "";
+
+				if( preg_match('/percent$/i', $ValueColumnNames[$j]) )
+				{
+				    $IsPercentColumn = "%";
+				}
+
+				echo "<td>" . $DataRow[$ValueColumnNames[$j]] . $IsPercentColumn . "</td>";
 			}
 
 			echo "</tr>";
