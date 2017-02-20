@@ -7,7 +7,6 @@ $MyClass    = new MPA($MessageLog, false);
 $ResultSet  = $MyClass->GetRecordList($db);
 
 $PageTitle = "Attendance Scorecard";
-$OrderColumn = 6;
 
 require_once("includes/header.php");
 

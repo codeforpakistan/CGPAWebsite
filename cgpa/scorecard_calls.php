@@ -8,7 +8,6 @@ $ResultSet  = $MyClass->GetRecordList($db);
 
 
 $PageTitle = "Call for Attention Scorecard";
-$OrderColumn = 4;
 
 require_once("includes/header.php");
 
@@ -93,11 +92,14 @@ require_once("includes/header.php");
                           <th class="sorting" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 168px;">
                             Rank
                           </th>
+                          <th class="sorting" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 168px;">
+                            Percentage
+                          </th>
                         </tr>
                     </thead>
                     <tbody>
 <?php
-                      Utils::HTMLForTable($MessageLog, $ResultSet, array("mpaName", "plpPoliticalPartyID", "cntConstituencyID", "CallAttentionNotices", "CRank"), array("even", "odd"));
+                      Utils::HTMLForTable($MessageLog, $ResultSet, array("mpaName", "plpPoliticalPartyID", "cntConstituencyID", "CallAttentionNotices", "CallAttentionNoticesRank", "CallAttentionNoticesPercent"), array("even", "odd"));
 ?>
                     </tbody>
                   </table>

@@ -11,6 +11,9 @@ require_once("footer.php");
 <!-- page script -->
 <script>
   $(function () {
+    var scoreTable = $('#scoreTable');
+    var lastColumn = $(scoreTable).find('th:last').index();
+    
     $('#scoreTable').DataTable({
       "paging": false,
       "lengthChange": false,
@@ -18,7 +21,7 @@ require_once("footer.php");
       "ordering": true,
       "info": false,
       "autoWidth": false,
-      "order": [[ <?php echo $OrderColumn; ?>, "desc" ]],
+      "order": [[ lastColumn, "desc" ]],
       "lengthMenu": [ 10, 25, 50, 75, 100, 150, 250, 500 ]
     });
   });

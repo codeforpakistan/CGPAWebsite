@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.23)
 # Database: cgpaweb
-# Generation Time: 2017-02-02 19:01:17 +0000
+# Generation Time: 2017-02-20 09:42:13 +0000
 # ************************************************************
 
 
@@ -1546,7 +1546,7 @@ UNLOCK TABLES;
 
 DROP TABLE `mpaattendance`;
 
-CREATE VIEW `mpaattendance`
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `mpaattendance`
 AS SELECT
    `attendance`.`mpaName` AS `mpaName`,sum(ifnull(`attendance`.`attPresents`,0)) AS `TotalPresents`,sum(ifnull(`attendance`.`attAbsents`,0)) AS `TotalAbsents`,sum(ifnull(`attendance`.`attApplications`,0)) AS `TotalApplications`
 FROM `attendance` group by `attendance`.`mpaName` order by `attendance`.`mpaName`;
@@ -1561,10 +1561,35 @@ DELIMITER ;;
 
 /*!50003 DROP PROCEDURE IF EXISTS `SP_GetMPAByName` */;;
 /*!50003 SET SESSION SQL_MODE="STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION"*/;;
-/*!50003 CREATE*/ /*!50003 PROCEDURE `SP_GetMPAByName`(IN `p_mpaName` VARCHAR(50))
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SP_GetMPAByName`(IN `p_mpaName` VARCHAR(50))
 BEGIN
 
-	SELECT mpa.mpaID	
+        DECLARE p_TotalQuestions                INT UNSIGNED DEFAULT 100;
+        DECLARE p_TotalResolutions              INT UNSIGNED DEFAULT 100;
+        DECLARE p_TotalPrivilegeMotions         INT UNSIGNED DEFAULT 100;
+        DECLARE p_TotalAdjournmentMotions       INT UNSIGNED DEFAULT 100;
+        DECLARE p_TotalCallAttentionNotices     INT UNSIGNED DEFAULT 100;
+        DECLARE p_TotalBills                    INT UNSIGNED DEFAULT 100;
+
+
+        SELECT  SUM(mpascorecard.Questions) 
+                , SUM(mpascorecard.Resolutions)
+                , SUM(mpascorecard.PrivilegeMotions)
+                , SUM(mpascorecard.AdjournmentMotions)
+                , SUM(mpascorecard.CallAttentionNotices)
+                , SUM(mpascorecard.Bills)
+
+        INTO    p_TotalQuestions
+                , p_TotalResolutions
+                , p_TotalPrivilegeMotions
+                , p_TotalAdjournmentMotions
+                , p_TotalCallAttentionNotices
+                , p_TotalBills
+
+        FROM    mpascorecard;
+
+
+	SELECT  mpa.mpaID	
 		, mpa.mpaName
 		, mpa.mpaDescription
 		, mpa.mpaImageName
@@ -1573,17 +1598,29 @@ BEGIN
 		, politicalparty.plpLongName
 		, politicalparty.plpImageName
 		, mpascorecard.Questions
-		, (SELECT IFNULL(COUNT(*), 0) FROM mpascorecard m2 where IFNULL(m2.Questions, 0) > IFNULL(mpascorecard.Questions, 0)) + 1 AS QRank
+		, (SELECT IFNULL(COUNT(*), 0) FROM mpascorecard m2 where IFNULL(m2.Questions, 0) > IFNULL(mpascorecard.Questions, 0)) + 1                       AS QuestionsRank
+                , p_TotalQuestions                                                                                                                              AS QuestionsTotal
+                , CAST((100 * Questions / p_TotalQuestions) AS DECIMAL(10,3))                                                                                   AS QuestionsPercent
 		, mpascorecard.Resolutions
-		, (SELECT IFNULL(COUNT(*), 0) FROM mpascorecard m2 where IFNULL(m2.Resolutions, 0) > IFNULL(mpascorecard.Resolutions, 0)) + 1 AS RRank
+		, (SELECT IFNULL(COUNT(*), 0) FROM mpascorecard m2 where IFNULL(m2.Resolutions, 0) > IFNULL(mpascorecard.Resolutions, 0)) + 1                   AS ResolutionsRank
+                , p_TotalResolutions                                                                                                                            AS ResolutionsTotal
+                , CAST((100 * Resolutions / p_TotalResolutions) AS DECIMAL(10,3))                                                                               AS ResolutionsPercent
 		, mpascorecard.PrivilegeMotions
-		, (SELECT IFNULL(COUNT(*), 0) FROM mpascorecard m2 where IFNULL(m2.PrivilegeMotions, 0) > IFNULL(mpascorecard.PrivilegeMotions, 0)) + 1 AS PRank
+		, (SELECT IFNULL(COUNT(*), 0) FROM mpascorecard m2 where IFNULL(m2.PrivilegeMotions, 0) > IFNULL(mpascorecard.PrivilegeMotions, 0)) + 1         AS PrivilegeMotionsRank
+                , p_TotalPrivilegeMotions                                                                                                                       AS PrivilegeMotionsTotal
+                , CAST((100 * PrivilegeMotions / p_TotalPrivilegeMotions) AS DECIMAL(10,3))                                                                     AS PrivilegeMotionsPercent
 		, mpascorecard.AdjournmentMotions
-		, (SELECT IFNULL(COUNT(*), 0) FROM mpascorecard m2 where IFNULL(m2.AdjournmentMotions, 0) > IFNULL(mpascorecard.AdjournmentMotions, 0)) + 1 AS ARank
+		, (SELECT IFNULL(COUNT(*), 0) FROM mpascorecard m2 where IFNULL(m2.AdjournmentMotions, 0) > IFNULL(mpascorecard.AdjournmentMotions, 0)) + 1     AS AdjournmentMotionsRank
+                , p_TotalAdjournmentMotions                                                                                                                     AS AdjournmentMotionsTotal
+                , CAST((100 * AdjournmentMotions / p_TotalAdjournmentMotions) AS DECIMAL(10,3))                                                                 AS AdjournmentMotionsPercent
 		, mpascorecard.CallAttentionNotices
-		, (SELECT IFNULL(COUNT(*), 0) FROM mpascorecard m2 where IFNULL(m2.CallAttentionNotices, 0) > IFNULL(mpascorecard.CallAttentionNotices, 0)) + 1 AS CRank
+		, (SELECT IFNULL(COUNT(*), 0) FROM mpascorecard m2 where IFNULL(m2.CallAttentionNotices, 0) > IFNULL(mpascorecard.CallAttentionNotices, 0)) + 1 AS CallAttentionNoticesRank
+                , p_TotalCallAttentionNotices                                                                                                                   AS CallAttentionNoticesTotal
+                , CAST((100 * CallAttentionNotices / p_TotalCallAttentionNotices) AS DECIMAL(10,3))                                                             AS CallAttentionNoticesPercent
 		, mpascorecard.Bills
-		, (SELECT IFNULL(COUNT(*), 0) FROM mpascorecard m2 where IFNULL(m2.Bills, 0) > IFNULL(mpascorecard.Bills, 0)) + 1 AS BRank
+		, (SELECT IFNULL(COUNT(*), 0) FROM mpascorecard m2 where IFNULL(m2.Bills, 0) > IFNULL(mpascorecard.Bills, 0)) + 1                               AS BillsRank
+                , p_TotalBills                                                                                                                                  AS BillsTotal
+                , CAST((100 * Bills / p_TotalBills) AS DECIMAL(10,3))                                                                                           AS BillsPercent
 		, mpaattendance.TotalPresents
 		, mpaattendance.TotalAbsents
 		, mpaattendance.TotalApplications
@@ -1607,7 +1644,7 @@ END */;;
 
 /*!50003 DROP PROCEDURE IF EXISTS `SP_GetMPAList` */;;
 /*!50003 SET SESSION SQL_MODE="STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION"*/;;
-/*!50003 CREATE*/ /*!50003 PROCEDURE `SP_GetMPAList`()
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SP_GetMPAList`()
 BEGIN
 
 	CALL SP_GetMPAByName(NULL);

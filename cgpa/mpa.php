@@ -129,7 +129,7 @@ require_once("includes/header.php");
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
                   <span class="progress-description">
-                    Rank #<?php echo $MyClass->m_txtResolutionsRank ?>
+                      <?php echo $MyClass->GetScoreRankPercentByType("Resolutions"); ?>
                   </span>
             </div>
             <!-- /.info-box-content -->
@@ -145,7 +145,7 @@ require_once("includes/header.php");
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
                   <span class="progress-description">
-                    Rank #<?php echo $MyClass->m_txtBillsRank ?>
+                      <?php echo $MyClass->GetScoreRankPercentByType("Bills"); ?>
                   </span>
             </div>
             <!-- /.info-box-content -->
@@ -161,7 +161,7 @@ require_once("includes/header.php");
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
                   <span class="progress-description">
-                    Rank #<?php echo $MyClass->m_txtCallAttentionNoticesRank ?>
+                      <?php echo $MyClass->GetScoreRankPercentByType("CallAttentionNotices"); ?>
                   </span>
             </div>
             <!-- /.info-box-content -->
@@ -180,7 +180,7 @@ require_once("includes/header.php");
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
                   <span class="progress-description">
-                    Rank #<?php echo $MyClass->m_txtQuestionsRank ?>
+                      <?php echo $MyClass->GetScoreRankPercentByType("Questions"); ?>
                   </span>
             </div>
             <!-- /.info-box-content -->
@@ -196,7 +196,7 @@ require_once("includes/header.php");
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
                   <span class="progress-description">
-                    Rank #<?php echo $MyClass->m_txtPrivilegeMotionsRank ?>
+                      <?php echo $MyClass->GetScoreRankPercentByType("PrivilegeMotions"); ?>
                   </span>
             </div>
             <!-- /.info-box-content -->
@@ -212,7 +212,7 @@ require_once("includes/header.php");
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
                   <span class="progress-description">
-                    Rank #<?php echo $MyClass->m_txtAdjournmentMotionsRank ?>
+                      <?php echo $MyClass->GetScoreRankPercentByType("AdjournmentMotions"); ?>
                   </span>
             </div>
             <!-- /.info-box-content -->

@@ -15,11 +15,7 @@
                     </ul>
                 </div>
                 <div class="col-lg-3  col-md-3 col-sm-6 col-xs-12">
-                    <h3>Powered By</h3>
-                    <ul>
-                        <li><a href="https://www.opensocietyfoundations.org/" target="_blank">Open Society Foundations</a></li>
-                        <li><a href="https://www.opensocietyfoundations.org/" target="_blank"><img src="img/osf_logo.png" height=50px></a></li>
-                    </ul>
+                     &nbsp;
                 </div>
                 <div class="col-lg-3  col-md-3 col-sm-6 col-xs-12 ">
                     <h3>Developed By</h3>
