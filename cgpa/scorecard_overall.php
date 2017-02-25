@@ -74,31 +74,31 @@ require_once("includes/header.php");
                             Constituency
                           </th>
                           <th class="sorting" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
-                            Questions
+                            Questions Percentage
                           </th>
                           <th class="sorting" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
-                            Resolutions
+                            Resolutions Percentage
                           </th>
                           <th class="sorting" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
-                            Privilege Motions
+                            Privilege Motions Percentage
                           </th>
                           <th class="sorting" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
-                            Adjournment Motions
+                            Adjournment Motions Percentage
                           </th>
                           <th class="sorting" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
-                            Call Attention Notices
+                            Call Attention Notices Percentage
                           </th>
                           <th class="sorting" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
-                            Bills
+                            Bills Percentage
                           </th>
                           <th class="sorting" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
-                            Overall
+                            Overall Percentage
                           </th>
                         </tr>
                     </thead>
                     <tbody>
 <?php
-                      Utils::HTMLForTable($MessageLog, $ResultSet, array("mpaName", "plpPoliticalPartyID", "cntConstituencyID", "Questions", "Resolutions", "PrivilegeMotions", "AdjournmentMotions", "CallAttentionNotices", "Bills", "Overall"), array("even", "odd"));
+                      Utils::HTMLForTable($MessageLog, $ResultSet, array("mpaName", "plpPoliticalPartyID", "cntConstituencyID", "QuestionsPercent", "ResolutionsPercent", "PrivilegeMotionsPercent", "AdjournmentMotionsPercent", "CallAttentionNoticesPercent", "BillsPercent", "OverallPercent"), array("even", "odd"));
 ?>
                     </tbody>
                   </table>

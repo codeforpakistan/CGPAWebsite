@@ -56,6 +56,9 @@ class MPA extends PageBase
 	public $m_txtTotalAbsents       		= "0";
 	public $m_txtTotalApplications  		= "0";
 
+	public $m_txtOverall  				= "0";
+	public $m_txtOverallPercent  			= "0";
+
 	
 	public function __construct($MessageLog)
 	{
@@ -137,6 +140,9 @@ class MPA extends PageBase
 		$this->m_txtTotalPresents     		= $DataRow["TotalPresents"];
 		$this->m_txtTotalAbsents      		= $DataRow["TotalAbsents"];
 		$this->m_txtTotalApplications 		= $DataRow["TotalApplications"];
+
+		$this->m_txtOverall      		= $DataRow["Overall"];
+		$this->m_txtOverallPercent 		= $DataRow["OverallPercent"];
 
 		return true;
 	}

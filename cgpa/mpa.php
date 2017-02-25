@@ -48,25 +48,30 @@ require_once("includes/header.php");
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
                     <img src="img/party/<?php echo $MyClass->m_txtPartyImageName ?>" alt="<?php echo $MyClass->m_txtPartyLongName ?>">
-                    <span class="description-text"><?php echo $MyClass->m_txtPartyLongName ?></span>
+                    <div class="info-box-content">
+                      <span class="info-box-text">Party</span>
+                      <span class="info-box-number"><?php echo $MyClass->m_txtPartyLongName ?></span>
+                    </div>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 border-right">
                   <div class="description-block">
-                    <span class="description-text"><?php echo $MyClass->m_txtConstituencyID ?></span>
+                    <div class="info-box-content">
+                      <span class="info-box-text">Constituency</span>
+                      <span class="info-box-number"><?php echo $MyClass->m_txtConstituencyID ?></span>
+                    </div>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4">
                   <div class="description-block">
-<!--
-                    <span class="description-text">SOMETHING HERE</span>
-                    <br />
-                    <span class="description-text">DATE HERE</span>
--->
+                      <div class="info-box-content">
+                        <span class="info-box-text">Overall Percentage</span>
+                        <span class="info-box-number"><?php echo $MyClass->m_txtOverallPercent ?>%</span>
+                      </div>
                   </div>
                   <!-- /.description-block -->
                 </div>

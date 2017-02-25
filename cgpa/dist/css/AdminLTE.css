@@ -4364,7 +4364,7 @@ table.text-center th {
   text-transform: uppercase;
 }
 .description-block img {
-  height: 50px;
+  height: 80px;
   float: left !important;
   margin-top: -15px;
 }

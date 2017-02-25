@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.23)
 # Database: cgpaweb
-# Generation Time: 2017-02-20 09:42:13 +0000
+# Generation Time: 2017-02-25 09:55:58 +0000
 # ************************************************************
 
 
@@ -1546,7 +1546,7 @@ UNLOCK TABLES;
 
 DROP TABLE `mpaattendance`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `mpaattendance`
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `mpaattendance`
 AS SELECT
    `attendance`.`mpaName` AS `mpaName`,sum(ifnull(`attendance`.`attPresents`,0)) AS `TotalPresents`,sum(ifnull(`attendance`.`attAbsents`,0)) AS `TotalAbsents`,sum(ifnull(`attendance`.`attApplications`,0)) AS `TotalApplications`
 FROM `attendance` group by `attendance`.`mpaName` order by `attendance`.`mpaName`;
@@ -1561,7 +1561,7 @@ DELIMITER ;;
 
 /*!50003 DROP PROCEDURE IF EXISTS `SP_GetMPAByName` */;;
 /*!50003 SET SESSION SQL_MODE="STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION"*/;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SP_GetMPAByName`(IN `p_mpaName` VARCHAR(50))
+/*!50003 CREATE*/ /*!50003 PROCEDURE `SP_GetMPAByName`(IN `p_mpaName` VARCHAR(50))
 BEGIN
 
         DECLARE p_TotalQuestions                INT UNSIGNED DEFAULT 100;
@@ -1626,6 +1626,14 @@ BEGIN
 		, mpaattendance.TotalApplications
 		, (SELECT IFNULL(COUNT(*), 0) FROM mpaattendance m3 where (IFNULL(m3.TotalPresents, 0) + IFNULL(m3.TotalApplications, 0)) > (IFNULL(mpaattendance.TotalPresents, 0) + IFNULL(mpaattendance.TotalApplications, 0))) + 1 AS ATTRank
 		, mpascorecard.Questions + mpascorecard.Resolutions + mpascorecard.PrivilegeMotions + mpascorecard.AdjournmentMotions + mpascorecard.CallAttentionNotices + mpascorecard.Bills		AS Overall
+                , CAST(((
+                                (SELECT     QuestionsPercent)
+                                + (SELECT   ResolutionsPercent)
+                                + (SELECT   PrivilegeMotionsPercent)
+                                + (SELECT   AdjournmentMotionsPercent)
+                                + (SELECT   CallAttentionNoticesPercent)
+                                + (SELECT   BillsPercent)
+                        ) / 6) AS DECIMAL(10,3))         AS OverallPercent
 	FROM	mpa 	INNER JOIN mpatenures
 		ON	mpa.mpaID 			= mpatenures.mpaID
 			AND mpa.mpaName			= IFNULL(p_mpaName, mpa.mpaName)
@@ -1644,7 +1652,7 @@ END */;;
 
 /*!50003 DROP PROCEDURE IF EXISTS `SP_GetMPAList` */;;
 /*!50003 SET SESSION SQL_MODE="STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION"*/;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SP_GetMPAList`()
+/*!50003 CREATE*/ /*!50003 PROCEDURE `SP_GetMPAList`()
 BEGIN
 
 	CALL SP_GetMPAByName(NULL);
