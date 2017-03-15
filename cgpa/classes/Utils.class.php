@@ -66,7 +66,7 @@ class Utils
 
 
 */
-	public static function HTMLForTable($MessageLog, $ResultSet, $ValueColumnNames, $EvenOddCSSStyles)
+	public static function HTMLForTable($MessageLog, $ResultSet, $ValueColumnNames, $EvenOddCSSStyles, $blnAddSerialNumber = false)
 	{
 		$DataRow = mysqli_fetch_array($ResultSet);
 
@@ -81,6 +81,11 @@ class Utils
 		while($DataRow)
 		{
 			echo "<tr role='row' class='" . $EvenOddCSSStyles[$i % 2] . "'>";
+
+			if( $blnAddSerialNumber )
+			{
+				echo "<td>" . ($i + 1) . "</td>";
+			}
 
 			for($j = 0; $j < sizeof($ValueColumnNames); $j++)
 			{

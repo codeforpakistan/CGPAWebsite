@@ -65,6 +65,9 @@ require_once("includes/header.php");
                       <thead>
                         <tr role="row">
                           <th class="sorting_asc" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
+                            Rank
+                          </th>
+                          <th class="sorting_asc" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
                             MPA Name
                           </th>
                           <th class="sorting" tabindex="0" aria-controls="scoreTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
@@ -98,7 +101,7 @@ require_once("includes/header.php");
                     </thead>
                     <tbody>
 <?php
-                      Utils::HTMLForTable($MessageLog, $ResultSet, array("mpaName", "plpPoliticalPartyID", "cntConstituencyID", "QuestionsPercent", "ResolutionsPercent", "PrivilegeMotionsPercent", "AdjournmentMotionsPercent", "CallAttentionNoticesPercent", "BillsPercent", "OverallPercent"), array("even", "odd"));
+                      Utils::HTMLForTable($MessageLog, $ResultSet, array("mpaName", "plpPoliticalPartyID", "cntConstituencyID", "QuestionsPercent", "ResolutionsPercent", "PrivilegeMotionsPercent", "AdjournmentMotionsPercent", "CallAttentionNoticesPercent", "BillsPercent", "OverallPercent"), array("even", "odd"), true);
 ?>
                     </tbody>
                   </table>
